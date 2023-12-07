@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:eiva/MainPage.dart';
+import 'package:eiva_mobile/MainPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -57,14 +57,11 @@ Future<void> saveValue() async {
       //save the value
       prefs.setInt(key, value);
     }
-
-    //retrieve and print the value to check if it's correctly saved
-    int? savedValue = prefs.getInt(key);
-    print('Key: $key, Saved Value: $savedValue');
   }
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
   // Get a value
   Future<int> getValue() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -75,9 +72,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'EIVA',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
       home: MainPage(),
     );

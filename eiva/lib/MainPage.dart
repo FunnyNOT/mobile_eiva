@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:eiva/HomePage.dart';
-import 'package:eiva/SettingsPage.dart';
+import 'package:eiva_mobile/HomePage.dart';
+import 'package:eiva_mobile/SettingsPage.dart';
 
 class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
   @override
-  _MainPageState createState() => _MainPageState();
+  MainPageState createState() => MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class MainPageState extends State<MainPage> {
   int _currentIndex = 0;
   final List<Widget> _children = const [
     HomePage(),
@@ -17,7 +18,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('EIVA')),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
