@@ -51,7 +51,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     myList[index]['group'] != myList[index - 1]['group'])
                   Text(
                     myList[index]['group'],
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 FutureBuilder<String>(
                   future: getPreferenceValue(myList[index]['name']),
@@ -65,6 +66,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         controller: controllers[index],
                         decoration: InputDecoration(
                           labelText: myList[index]['greek'],
+                          labelStyle: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         onChanged: (value) {
                           savePreferenceValue(myList[index]['name'], value);
