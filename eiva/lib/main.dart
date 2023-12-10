@@ -45,6 +45,7 @@ Future<void> saveValue() async {
     {'name': 'metopi_42', 'price': 25, 'type': 'int'},
     {'name': 'metopi_47', 'price': 30, 'type': 'int'},
     {'name': 'metopi_52', 'price': 35, 'type': 'int'},
+    {'name': 'metopi_vammeno', 'price': 5, 'type': 'int'},
     {'name': 'apasfalish', 'price': 55, 'type': 'int'},
   ];
 
