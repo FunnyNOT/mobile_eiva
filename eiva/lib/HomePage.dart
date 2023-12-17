@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
     var metopiList =
         allItems.where((item) => item['group'] == 'Μετώπη').toList();
 
-    var discountList = [0, 35, 37.5, 40, 42.5];
+    var discountList = [20, 35, 37.5, 40, 42.5];
 
     return Scaffold(
       body: Center(
@@ -63,12 +63,12 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           child: TextFormField(
                             decoration: const InputDecoration(
-                              hintText: 'Ύψος',
+                              hintText: 'Πλάτος',
                             ),
                             keyboardType: TextInputType.number,
                             onChanged: (newValue) {
                               setState(() {
-                                selectedHeight = newValue;
+                                selectedWidth = newValue;
                               });
                             },
                           ),
@@ -77,12 +77,12 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           child: TextFormField(
                             decoration: const InputDecoration(
-                              hintText: 'Πλάτος',
+                              hintText: 'Ύψος',
                             ),
                             keyboardType: TextInputType.number,
                             onChanged: (newValue) {
                               setState(() {
-                                selectedWidth = newValue;
+                                selectedHeight = newValue;
                               });
                             },
                           ),
@@ -340,54 +340,49 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Center(
-                child: ElevatedButton(
-                  onPressed: () async {
-                    // Run calculations
-                    List resultList = await calculatePrice(
-                      double.parse(selectedHeight),
-                      double.parse(selectedWidth),
-                      selectedType,
-                      selectedChannel,
-                      selectedMotor,
-                      selectedElectronics,
-                      selectedBox,
-                      selectedMetopi,
-                      selectedTypeVammeno,
-                      selectedChannelVammeno,
-                      selectedBoxVammeno,
-                      selectedMetopiVammeno,
-                      selectedApasfalish,
-                      selectedFouska,
-                      selectedDiscount,
-                    );
-
-                    // show the resultList in a pop up window
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Results'),
-                          content: Column(
+                child: Builder(
+                  builder: (BuildContext context) => ElevatedButton(
+                    onPressed: () async {
+                      // Run calculations
+                      List resultList = await calculatePrice(
+                        double.parse(selectedHeight),
+                        double.parse(selectedWidth),
+                        selectedType,
+                        selectedChannel,
+                        selectedMotor,
+                        selectedElectronics,
+                        selectedBox,
+                        selectedMetopi,
+                        selectedTypeVammeno,
+                        selectedChannelVammeno,
+                        selectedBoxVammeno,
+                        selectedMetopiVammeno,
+                        selectedApasfalish,
+                        selectedFouska,
+                        selectedDiscount,
+                      );
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return SimpleDialog(
+                            title: const Text('Results'),
                             children: resultList.map((result) {
-                              return Text(
-                                  '${result['greek']}: ${result['value']}');
+                              return SimpleDialogOption(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                    '${result['greek']}: ${result['value']}'),
+                              );
                             }).toList(),
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  child: const Text('Submit'),
+                          );
+                        },
+                      );
+                    },
+                    child: const Text('Submit'),
+                  ),
                 ),
-              ),
+              )
             ],
           ),
         ),

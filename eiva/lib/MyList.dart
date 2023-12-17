@@ -33,7 +33,7 @@ final List myList = [
   },
   {
     'name': 'type_lamarina_monosh',
-    'greek': 'Λαμαρίνα Μονός',
+    'greek': 'Λαμαρίνα Μόνωση',
     'group': 'Τύπος Ρολού'
   },
   {'name': 'type_vammeno', 'greek': 'Βαμμένο', 'group': 'Τύπος Ρολού'},
@@ -44,7 +44,7 @@ final List myList = [
     'greek': 'Βιομηχανικό Βαθύ',
     'group': 'Κανάλι'
   },
-  {'name': 'channel_analogiko', 'greek': 'Αναλογικό', 'group': 'Κανάλι'},
+  {'name': 'channel_analogiko', 'greek': 'Απλό Κανάλι', 'group': 'Κανάλι'},
   {'name': 'channel_vammeno', 'greek': 'Βαμμένο', 'group': 'Κανάλι'},
   {'name': 'motor_60/600', 'greek': '60/600', 'group': 'Μοτέρ'},
   {'name': 'motor_76/600', 'greek': '76/600', 'group': 'Μοτέρ'},
@@ -58,12 +58,12 @@ final List myList = [
   },
   {
     'name': 'electronics_double_button',
-    'greek': 'Ηλεκτρονικό Διπλό Κουμπί',
+    'greek': 'Μπουτόν Διπλό',
     'group': 'Ηλεκτρονικά'
   },
   {
     'name': 'electronics_button_key',
-    'greek': 'Ηλεκτρονικό Κουμπί Κλειδί',
+    'greek': 'Μπουτόν Κλειδί',
     'group': 'Ηλεκτρονικά'
   },
   {'name': 'box_35_35', 'greek': '35x35', 'group': 'Κουτί'},
@@ -114,7 +114,7 @@ final List myListHomePage = [
   },
   {
     'name': 'type_lamarina_monosh',
-    'greek': 'Λαμαρίνα Μονός',
+    'greek': 'Λαμαρίνα Μόνωση',
     'group': 'Τύπος Ρολού'
   },
   {'name': 'type_vammeno', 'greek': 'Βαμμένο', 'group': 'Βαμμένο'},
@@ -135,12 +135,12 @@ final List myListHomePage = [
   {'name': 'electronics_sonata', 'greek': 'Sonata', 'group': 'Ηλεκτρονικά'},
   {
     'name': 'electronics_double_button',
-    'greek': 'Διπλό Κουμπί',
+    'greek': 'Μπουτόν Διπλό',
     'group': 'Ηλεκτρονικά'
   },
   {
     'name': 'electronics_button_key',
-    'greek': 'Κουμπί Κλειδί',
+    'greek': 'Μπουτόν Κλειδί',
     'group': 'Ηλεκτρονικά'
   },
   {'name': 'box_35_35', 'greek': '35x35', 'group': 'Κουτί'},

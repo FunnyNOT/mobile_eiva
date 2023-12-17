@@ -11,7 +11,7 @@ Future<double> getTypePrice(
   double finalTypePrice = 0;
   if (typeVammeno) {
     var vafhPrice = getPreferenceValue('type_vammeno');
-    finalTypePrice = (typePrice * size) + double.parse(await vafhPrice);
+    finalTypePrice = (typePrice + double.parse(await vafhPrice)) * size;
   } else {
     finalTypePrice = typePrice * size;
   }
@@ -69,12 +69,12 @@ Future<double> getApasfalishPrice(bool apasfalish) async {
   return finalApasfalishPrice;
 }
 
-Future<double> getFouskaPrice(bool fouska) async {
+Future<double> getFouskaPrice(bool fouska, double width) async {
   double finalFouskaPrice = 0;
 
   if (fouska) {
     var fouskaPrice = getPreferenceValue('lastixo_fouska');
-    finalFouskaPrice = double.parse(await fouskaPrice);
+    finalFouskaPrice = double.parse(await fouskaPrice) * width;
   }
 
   return finalFouskaPrice;
@@ -124,7 +124,7 @@ Future<List> calculatePrice(
 
     var finalApasfalishPrice = getApasfalishPrice(apasfalish);
 
-    var finalFouskaPrice = getFouskaPrice(fouska);
+    var finalFouskaPrice = getFouskaPrice(fouska, width);
 
     // Calculate the final price ---------------------------------------
     // resultMap.add({'greek': 'Te', 'value':await finalTypePrice});
@@ -135,6 +135,14 @@ Future<List> calculatePrice(
     // resultMap['finalMetopiPrice'] = await finalMetopiPrice;
     // resultMap['finalApasfalishPrice'] = await finalApasfalishPrice;
     // resultMap['finalFouskaPrice'] = await finalFouskaPrice;
+    print(await finalTypePrice);
+    print(await finalChannelPrice);
+    print(await motor_price);
+    print(await electronics_price);
+    print(await finalBoxPrice);
+    print(await finalMetopiPrice);
+    print(await finalApasfalishPrice);
+    print(await finalFouskaPrice);
 
     double finalPrice = await finalTypePrice +
         await finalChannelPrice +
@@ -144,15 +152,15 @@ Future<List> calculatePrice(
         await finalMetopiPrice +
         await finalApasfalishPrice +
         await finalFouskaPrice;
-    double discountedPrice = finalPrice - (finalPrice * (discount / 100));
 
+    String finalPriceString = finalPrice.toStringAsFixed(2);
+    double discountedPrice = finalPrice - (finalPrice * (discount / 100));
+    discountedPrice = double.parse(discountedPrice.toStringAsFixed(2));
     resultList.add({'greek': 'Τελική Τιμή', 'value': finalPrice});
     resultList.add({
       'greek': 'Τελική Τιμή με Έκπτωση $discount%',
       'value': discountedPrice
     });
-
-    print(resultList);
   } catch (e) {
     print(e);
   }
