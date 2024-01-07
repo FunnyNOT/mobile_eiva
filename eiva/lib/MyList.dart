@@ -152,6 +152,6 @@ final List myListHomePage = [
   {'name': 'metopi_42', 'greek': 'Μετώπη 42', 'group': 'Μετώπη'},
   {'name': 'metopi_47', 'greek': 'Μετώπη 47', 'group': 'Μετώπη'},
   {'name': 'metopi_52', 'greek': 'Μετώπη 52', 'group': 'Μετώπη'},
-  {'name': 'metopi_vammeno', 'greek': 'Βαμμένο', 'group': 'Μετώπη'},
+  {'name': 'metopi_vammeno', 'greek': 'Βαμμένο', 'group': 'Βαμμένο'},
   {'name': 'apasfalish', 'greek': 'Απασφάλιση', 'group': 'Έξτρα'},
 ];

@@ -6,64 +6,115 @@ Future<String> getPreferenceValue(String key) async {
   return value != null ? value.toString() : 'Nop';
 }
 
-Future<double> getTypePrice(
-    double typePrice, double size, bool typeVammeno) async {
+Future<double> getTypePrice(Map type, double size, bool typeVammeno) async {
   double finalTypePrice = 0;
-  if (typeVammeno) {
-    var vafhPrice = getPreferenceValue('type_vammeno');
-    finalTypePrice = (typePrice + double.parse(await vafhPrice)) * size;
-  } else {
-    finalTypePrice = typePrice * size;
+
+  // Check if type hasn't been selected
+  if (type.isNotEmpty) {
+    // Get type price per square meter
+    var typePrice = double.parse(await getPreferenceValue(type['name']));
+
+    if (typeVammeno) {
+      var vafhPrice = double.parse(await getPreferenceValue('type_vammeno'));
+      finalTypePrice = (typePrice + vafhPrice) * size;
+    } else {
+      finalTypePrice = typePrice * size;
+    }
   }
 
   return finalTypePrice;
 }
 
 Future<double> getChannelPrice(
-    double channelPrice, bool channelVammeno, double height) async {
+    Map channel, double height, bool channelVammeno) async {
   double finalChannelPrice = 0;
 
-  if (channelVammeno) {
-    var vafhPrice = getPreferenceValue('channel_vammeno');
-    finalChannelPrice = (double.parse(await vafhPrice) + channelPrice) * height;
-  } else {
-    finalChannelPrice = channelPrice * height;
+  // Check if channel hasn't been selected
+  if (channel.isNotEmpty) {
+    // Get channel price per square meter
+    var channelPrice = double.parse(await getPreferenceValue(channel['name']));
+
+    if (channelVammeno) {
+      var vafhPrice = double.parse(await getPreferenceValue('channel_vammeno'));
+      finalChannelPrice = (channelPrice + vafhPrice) * height;
+    } else {
+      finalChannelPrice = channelPrice * height;
+    }
   }
+
   return finalChannelPrice;
 }
 
-Future<double> getBoxPrice(
-    double boxPrice, bool boxVammeno, double width) async {
+Future<double> getBoxPrice(Map box, double width, bool boxVammeno) async {
   double finalBoxPrice = 0;
 
-  if (boxVammeno) {
-    var vafhPrice = getPreferenceValue('box_vammeno');
-    finalBoxPrice = (double.parse(await vafhPrice) + boxPrice) * width;
-  } else {
-    finalBoxPrice = boxPrice * width;
+  // Check if box hasn't been selected
+  if (box.isNotEmpty) {
+    // Get box price per square meter
+    var boxPrice = double.parse(await getPreferenceValue(box['name']));
+
+    if (boxVammeno) {
+      var vafhPrice = double.parse(await getPreferenceValue('box_vammeno'));
+      finalBoxPrice = (boxPrice + vafhPrice) * width;
+    } else {
+      finalBoxPrice = boxPrice * width;
+    }
   }
+
   return finalBoxPrice;
 }
 
 Future<double> getMetopiPrice(
-    double metopiPrice, bool metopiVammeno, double width) async {
+    Map metopi, double width, bool metopiVammeno) async {
   double finalMetopiPrice = 0;
 
-  if (metopiVammeno) {
-    var vafhPrice = getPreferenceValue('metopi_vammeno');
-    finalMetopiPrice = (double.parse(await vafhPrice) + metopiPrice) * width;
-  } else {
-    finalMetopiPrice = metopiPrice * width;
+  // Check if metopi hasn't been selected
+  if (metopi.isNotEmpty) {
+    // Get metopi price per square meter
+    var metopiPrice = double.parse(await getPreferenceValue(metopi['name']));
+
+    if (metopiVammeno) {
+      var vafhPrice = double.parse(await getPreferenceValue('metopi_vammeno'));
+      finalMetopiPrice = (metopiPrice + vafhPrice) * width;
+    } else {
+      finalMetopiPrice = metopiPrice * width;
+    }
   }
   return finalMetopiPrice;
+}
+
+Future<double> getMotorPrice(Map motor) async {
+  double finalMotorPrice = 0;
+
+  // Check if motor hasn't been selected
+  if (motor.isNotEmpty) {
+    // Get motor price
+    var motorPrice = double.parse(await getPreferenceValue(motor['name']));
+
+    finalMotorPrice = motorPrice;
+  }
+  return finalMotorPrice;
+}
+
+Future<double> getElectronicsPrice(Map electronics) async {
+  double finalElectronicsPrice = 0;
+
+  // Check if electronics hasn't been selected
+  if (electronics.isNotEmpty) {
+    // Get electronics price
+    var electronicsPrice =
+        double.parse(await getPreferenceValue(electronics['name']));
+
+    finalElectronicsPrice = electronicsPrice;
+  }
+  return finalElectronicsPrice;
 }
 
 Future<double> getApasfalishPrice(bool apasfalish) async {
   double finalApasfalishPrice = 0;
 
   if (apasfalish) {
-    var apasfalishPrice = getPreferenceValue('apasfalish');
-    finalApasfalishPrice = double.parse(await apasfalishPrice);
+    finalApasfalishPrice = double.parse(await getPreferenceValue('apasfalish'));
   }
 
   return finalApasfalishPrice;
@@ -73,97 +124,80 @@ Future<double> getFouskaPrice(bool fouska, double width) async {
   double finalFouskaPrice = 0;
 
   if (fouska) {
-    var fouskaPrice = getPreferenceValue('lastixo_fouska');
-    finalFouskaPrice = double.parse(await fouskaPrice) * width;
+    finalFouskaPrice =
+        double.parse(await getPreferenceValue('lastixo_fouska')) * width;
   }
 
   return finalFouskaPrice;
 }
 
 Future<List> calculatePrice(
-    double height,
-    double width,
-    Map type,
-    Map channel,
-    Map motor,
-    Map electronics,
-    Map box,
-    Map metopi,
-    bool typeVammeno,
-    bool channelVammeno,
-    bool boxVammeno,
-    bool metopiVammeno,
-    bool apasfalish,
-    bool fouska,
-    int discount) async {
+  double height,
+  double width,
+  Map type,
+  bool typeVammeno,
+  Map channel,
+  bool channelVammeno,
+  Map box,
+  bool boxVammeno,
+  Map metopi,
+  bool metopiVammeno,
+  Map motor,
+  Map electronics,
+  bool apasfalish,
+  bool fouska,
+  int discount,
+  // String discount
+) async {
   List resultList = [];
   height = height / 100;
   width = width / 100;
   resultList.add({'greek': 'Εμβαδόν', 'value': height * width});
 
-  // Get the prices of the selected components
-  var type_price = getPreferenceValue(type['name']);
-  var channel_price = getPreferenceValue(channel['name']);
-  var motor_price = getPreferenceValue(motor['name']);
-  var electronics_price = getPreferenceValue(electronics['name']);
-  var box_price = getPreferenceValue(box['name']);
-  var metopi_price = getPreferenceValue(metopi['name']);
+  var finalTypePrice = await getTypePrice(type, height * width, typeVammeno);
 
-  try {
-    var finalTypePrice = getTypePrice(
-        double.parse(await type_price), height * width, typeVammeno);
+  var finalChannelPrice =
+      await getChannelPrice(channel, height * width, channelVammeno);
 
-    var finalChannelPrice = getChannelPrice(
-        double.parse(await channel_price), channelVammeno, height);
+  var finalBoxPrice = await getBoxPrice(box, width, boxVammeno);
 
-    var finalBoxPrice =
-        getBoxPrice(double.parse(await box_price), boxVammeno, width);
+  var finalMetopiPrice = await getMetopiPrice(metopi, width, metopiVammeno);
 
-    var finalMetopiPrice =
-        getMetopiPrice(double.parse(await metopi_price), metopiVammeno, width);
+  var finalMotorPrice = await getMotorPrice(motor);
 
-    var finalApasfalishPrice = getApasfalishPrice(apasfalish);
+  var finalElectronicsPrice = await getElectronicsPrice(electronics);
 
-    var finalFouskaPrice = getFouskaPrice(fouska, width);
+  var finalApasfalishPrice = await getApasfalishPrice(apasfalish);
 
-    // Calculate the final price ---------------------------------------
-    // resultMap.add({'greek': 'Te', 'value':await finalTypePrice});
-    // resultMap['finalChannelPrice'] = await finalChannelPrice;
-    // resultMap['finalMotorPrice'] = double.parse(await motor_price);
-    // resultMap['finalElectronicsPrice'] = double.parse(await electronics_price);
-    // resultMap['finalBoxPrice'] = await finalBoxPrice;
-    // resultMap['finalMetopiPrice'] = await finalMetopiPrice;
-    // resultMap['finalApasfalishPrice'] = await finalApasfalishPrice;
-    // resultMap['finalFouskaPrice'] = await finalFouskaPrice;
-    print(await finalTypePrice);
-    print(await finalChannelPrice);
-    print(await motor_price);
-    print(await electronics_price);
-    print(await finalBoxPrice);
-    print(await finalMetopiPrice);
-    print(await finalApasfalishPrice);
-    print(await finalFouskaPrice);
+  var finalFouskaPrice = await getFouskaPrice(fouska, width);
 
-    double finalPrice = await finalTypePrice +
-        await finalChannelPrice +
-        double.parse(await motor_price) +
-        double.parse(await electronics_price) +
-        await finalBoxPrice +
-        await finalMetopiPrice +
-        await finalApasfalishPrice +
-        await finalFouskaPrice;
+  // Add components to result list
+  resultList.add({'greek': 'Τύπος', 'value': finalTypePrice});
+  resultList.add({'greek': 'Κανάλι', 'value': finalChannelPrice});
+  resultList.add({'greek': 'Μοτέρ', 'value': finalMotorPrice});
+  resultList.add({'greek': 'Κουτί', 'value': finalBoxPrice});
+  resultList.add({'greek': 'Μετώπη', 'value': finalMetopiPrice});
+  resultList.add({'greek': 'Ηλεκτρονικά', 'value': finalElectronicsPrice});
+  resultList.add({'greek': 'Απασφάλιση', 'value': finalApasfalishPrice});
+  resultList.add({'greek': 'Φούσκα', 'value': finalFouskaPrice});
 
-    String finalPriceString = finalPrice.toStringAsFixed(2);
-    double discountedPrice = finalPrice - (finalPrice * (discount / 100));
-    discountedPrice = double.parse(discountedPrice.toStringAsFixed(2));
-    resultList.add({'greek': 'Τελική Τιμή', 'value': finalPrice});
-    resultList.add({
-      'greek': 'Τελική Τιμή με Έκπτωση $discount%',
-      'value': discountedPrice
-    });
-  } catch (e) {
-    print(e);
-  }
+  // Calculate total price
+  double totalPrice = 0;
+  totalPrice = finalTypePrice +
+      finalChannelPrice +
+      finalMotorPrice +
+      finalBoxPrice +
+      finalMetopiPrice +
+      finalElectronicsPrice +
+      finalApasfalishPrice +
+      finalFouskaPrice;
+
+  double totalPriceWithDiscount = totalPrice - (totalPrice * (discount / 100));
+
+  // Add total price to result list
+  resultList.add({'greek': 'Σύνολο', 'value': totalPrice});
+  resultList
+      .add({'greek': 'Σύνολο με έκπτωση', 'value': totalPriceWithDiscount});
 
   return resultList;
 }

@@ -29,6 +29,33 @@ class _HomePageState extends State<HomePage> {
   var selectedDiscount;
 
   @override
+  void initState() {
+    super.initState();
+    // Initialize selectedDiscount to 20
+    selectedDiscount = 20;
+    var allItems = myListHomePage;
+    var typeList =
+        allItems.where((item) => item['group'] == 'Τύπος Ρολού').toList();
+    if (typeList.isNotEmpty) {
+      selectedType = typeList.first;
+    }
+    var channelList =
+        allItems.where((item) => item['group'] == 'Κανάλι').toList();
+    if (channelList.isNotEmpty) {
+      selectedChannel = channelList.first;
+    }
+    var motorList = allItems.where((item) => item['group'] == 'Μοτέρ').toList();
+    if (motorList.isNotEmpty) {
+      selectedMotor = motorList.first;
+    }
+    var electronicsList =
+        allItems.where((item) => item['group'] == 'Ηλεκτρονικά').toList();
+    if (electronicsList.isNotEmpty) {
+      selectedElectronics = electronicsList.first;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     var allItems = myListHomePage;
     var typeList =
@@ -343,20 +370,32 @@ class _HomePageState extends State<HomePage> {
                 child: Builder(
                   builder: (BuildContext context) => ElevatedButton(
                     onPressed: () async {
+                      // check if selectedWidth and selectedHeight are not null and not empty
+                      if (selectedWidth == null ||
+                          selectedWidth == '' ||
+                          selectedHeight == null ||
+                          selectedHeight == '') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Παρακαλώ εισάγετε πλάτος και ύψος'),
+                          ),
+                        );
+                        return;
+                      }
                       // Run calculations
                       List resultList = await calculatePrice(
                         double.parse(selectedHeight),
                         double.parse(selectedWidth),
-                        selectedType,
-                        selectedChannel,
-                        selectedMotor,
-                        selectedElectronics,
-                        selectedBox,
-                        selectedMetopi,
+                        selectedType ?? {},
                         selectedTypeVammeno,
+                        selectedChannel ?? {},
                         selectedChannelVammeno,
+                        selectedBox ?? {},
                         selectedBoxVammeno,
+                        selectedMetopi ?? {},
                         selectedMetopiVammeno,
+                        selectedMotor ?? {},
+                        selectedElectronics ?? {},
                         selectedApasfalish,
                         selectedFouska,
                         selectedDiscount,
