@@ -25,14 +25,14 @@ class _HomePageState extends State<HomePage> {
   bool selectedBoxVammeno = true;
   bool selectedMetopiVammeno = true;
   bool selectedApasfalish = false;
-  bool selectedFouska = false;
+  bool selectedFouska = true;
   var selectedDiscount;
 
   @override
   void initState() {
     super.initState();
     // Initialize selectedDiscount to 20
-    selectedDiscount = 20;
+    selectedDiscount = 20.0;
     var allItems = myListHomePage;
     var typeList =
         allItems.where((item) => item['group'] == 'Τύπος Ρολού').toList();
@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
     var metopiList =
         allItems.where((item) => item['group'] == 'Μετώπη').toList();
 
-    var discountList = [20, 35, 37.5, 40, 42.5];
+    var discountList = [20.0, 35.0, 37.5, 40.0, 42.5];
 
     return Scaffold(
       body: Center(

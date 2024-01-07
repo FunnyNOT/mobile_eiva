@@ -146,7 +146,7 @@ Future<List> calculatePrice(
   Map electronics,
   bool apasfalish,
   bool fouska,
-  int discount,
+  double discount,
   // String discount
 ) async {
   List resultList = [];
@@ -157,7 +157,7 @@ Future<List> calculatePrice(
   var finalTypePrice = await getTypePrice(type, height * width, typeVammeno);
 
   var finalChannelPrice =
-      await getChannelPrice(channel, height * width, channelVammeno);
+      await getChannelPrice(channel, height, channelVammeno);
 
   var finalBoxPrice = await getBoxPrice(box, width, boxVammeno);
 
@@ -172,14 +172,16 @@ Future<List> calculatePrice(
   var finalFouskaPrice = await getFouskaPrice(fouska, width);
 
   // Add components to result list
-  resultList.add({'greek': 'Τύπος', 'value': finalTypePrice});
-  resultList.add({'greek': 'Κανάλι', 'value': finalChannelPrice});
-  resultList.add({'greek': 'Μοτέρ', 'value': finalMotorPrice});
-  resultList.add({'greek': 'Κουτί', 'value': finalBoxPrice});
-  resultList.add({'greek': 'Μετώπη', 'value': finalMetopiPrice});
-  resultList.add({'greek': 'Ηλεκτρονικά', 'value': finalElectronicsPrice});
-  resultList.add({'greek': 'Απασφάλιση', 'value': finalApasfalishPrice});
-  resultList.add({'greek': 'Φούσκα', 'value': finalFouskaPrice});
+  resultList.add({'greek': 'Τύπος', 'value': finalTypePrice.toInt()});
+  resultList.add({'greek': 'Κανάλι', 'value': finalChannelPrice.toInt()});
+  resultList.add({'greek': 'Μοτέρ', 'value': finalMotorPrice.toInt()});
+  resultList.add({'greek': 'Κουτί', 'value': finalBoxPrice.toInt()});
+  resultList.add({'greek': 'Μετώπη', 'value': finalMetopiPrice.toInt()});
+  resultList
+      .add({'greek': 'Ηλεκτρονικά', 'value': finalElectronicsPrice.toInt()});
+  resultList
+      .add({'greek': 'Απασφάλιση', 'value': finalApasfalishPrice.toInt()});
+  resultList.add({'greek': 'Φούσκα', 'value': finalFouskaPrice.toInt()});
 
   // Calculate total price
   double totalPrice = 0;
@@ -192,12 +194,29 @@ Future<List> calculatePrice(
       finalApasfalishPrice +
       finalFouskaPrice;
 
-  double totalPriceWithDiscount = totalPrice - (totalPrice * (discount / 100));
+  int totalPriceWithDiscount =
+      (totalPrice - (totalPrice * (discount / 100))).toInt();
 
   // Add total price to result list
-  resultList.add({'greek': 'Σύνολο', 'value': totalPrice});
+  resultList.add({'greek': 'Σύνολο', 'value': totalPrice.toInt()});
   resultList
       .add({'greek': 'Σύνολο με έκπτωση', 'value': totalPriceWithDiscount});
+
+  int totalPriceWithDiscountForty =
+      (totalPrice - (totalPrice * (40 / 100))).toInt();
+  int totalPriceWithDiscountSixty =
+      (totalPrice - (totalPrice * (37.5 / 100))).toInt();
+  int totalPriceWithDiscountFifty =
+      (totalPrice - (totalPrice * (35 / 100))).toInt();
+
+  resultList.add(
+      {'greek': 'Σύνολο με έκπτωση 40%', 'value': totalPriceWithDiscountForty});
+  resultList.add({
+    'greek': 'Σύνολο με έκπτωση 37.5%',
+    'value': totalPriceWithDiscountSixty
+  });
+  resultList.add(
+      {'greek': 'Σύνολο με έκπτωση 35%', 'value': totalPriceWithDiscountFifty});
 
   return resultList;
 }
